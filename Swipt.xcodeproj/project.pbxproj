@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		A8207A3720C79AD300E93103 /* SwiptCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8207A3620C79AD300E93103 /* SwiptCore.swift */; };
 		A8207A3920C79BD300E93103 /* Privileges.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8207A3820C79BD300E93103 /* Privileges.swift */; };
-		A8207A3B20C79CED00E93103 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8207A3A20C79CED00E93103 /* Constants.swift */; };
+		A8207A3B20C79CED00E93103 /* Constants+Aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8207A3A20C79CED00E93103 /* Constants+Aliases.swift */; };
 		A829159F20C7C1F700554FB5 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A829159E20C7C1F700554FB5 /* Errors.swift */; };
 		A890F65220C7AB4500D8984A /* ShellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890F65120C7AB4500D8984A /* ShellType.swift */; };
 		A8FE40C1207A77CF00BAEE61 /* Swipt.h in Headers */ = {isa = PBXBuildFile; fileRef = A8FE40BF207A77CF00BAEE61 /* Swipt.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -19,7 +19,7 @@
 /* Begin PBXFileReference section */
 		A8207A3620C79AD300E93103 /* SwiptCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiptCore.swift; sourceTree = "<group>"; };
 		A8207A3820C79BD300E93103 /* Privileges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Privileges.swift; sourceTree = "<group>"; };
-		A8207A3A20C79CED00E93103 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A8207A3A20C79CED00E93103 /* Constants+Aliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Aliases.swift"; sourceTree = "<group>"; };
 		A829159E20C7C1F700554FB5 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		A890F65120C7AB4500D8984A /* ShellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellType.swift; sourceTree = "<group>"; };
 		A8FE40BC207A77CF00BAEE61 /* Swipt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Swipt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,7 +44,7 @@
 			children = (
 				A8207A3820C79BD300E93103 /* Privileges.swift */,
 				A890F65120C7AB4500D8984A /* ShellType.swift */,
-				A8207A3A20C79CED00E93103 /* Constants.swift */,
+				A8207A3A20C79CED00E93103 /* Constants+Aliases.swift */,
 				A829159E20C7C1F700554FB5 /* Errors.swift */,
 			);
 			name = Properties;
@@ -176,7 +176,7 @@
 				A8FE40CC207A783E00BAEE61 /* SwiptManager.swift in Sources */,
 				A8207A3920C79BD300E93103 /* Privileges.swift in Sources */,
 				A8207A3720C79AD300E93103 /* SwiptCore.swift in Sources */,
-				A8207A3B20C79CED00E93103 /* Constants.swift in Sources */,
+				A8207A3B20C79CED00E93103 /* Constants+Aliases.swift in Sources */,
 				A829159F20C7C1F700554FB5 /* Errors.swift in Sources */,
 				A890F65220C7AB4500D8984A /* ShellType.swift in Sources */,
 			);

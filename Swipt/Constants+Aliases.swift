@@ -6,8 +6,16 @@
 //  Copyright © 2018 Mayank Kumar. All rights reserved.
 //
 
+
+/// Handles script termination.
+/// - Parameters:
+///   - error: Returned error code
+///   - message: Return error message
+///   - output: Script output/result
+public typealias RequestHandler = (_ error: Int, _ message: String, _ output: String) -> Void
+
 /// AppleScript: Shell invocation call
-let aSSaveTarget: String = "set target as quoted form of"
+let aSSaveTarget: String = "set target to quoted form of"
 
 /// AppleScript: Shell invocation call
 let aSInvokeShell: String = "do shell script"

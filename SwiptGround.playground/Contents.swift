@@ -3,8 +3,12 @@
 import Swipt
 import Foundation
 
-let unixScript = "opens /Applications"
+let unixScript = "echo yo"
 
-SwiptManager.execute(unixScriptText: unixScript) { error, message in
-    print(error, message)
+SwiptManager.execute(unixScriptText: unixScript) { error, message, output in
+    print(error, message, output)
 }
+
+//SwiptManager.execute(unixScriptFile: "/Users/mayank/Desktop/test.sh", withShellType: .bash) { error, message, output in
+//    print(error, message, output)
+//}

@@ -6,6 +6,10 @@
 //  Copyright © 2018 Mayank Kumar. All rights reserved.
 //
 
+/// Available shell types
+///
+/// - bash: To execute using `/bin/bash`
+/// - sh: To execute using `/bin/sh` (default)
 public enum ShellType: String {
-    case bash = "bash", sh = "sh"
+    case bash = "/bin/bash", sh = "/bin/sh"
 }
