@@ -34,7 +34,7 @@ public class SwiptManager {
     ///   - shellType: Choice of shell (default = `/bin/sh`)
     ///   - completionHandler: Handles script completion
     public static func execute(unixScriptFile scriptPath: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler) {
-        core.execute(unixScript: scriptPath, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType, completionHandler: completionHandler)
+        core.execute(unixScriptPath: scriptPath, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType, completionHandler: completionHandler)
     }
 
 }

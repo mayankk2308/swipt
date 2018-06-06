@@ -41,9 +41,6 @@ internal class SwiptCore {
     ///   - scriptText: Any `unix` command
     ///   - privilegeLevel: Required privilege level (default = `user`)
     ///   - completionHandler: Handles script completion
-    ///   - error: Handles script completion
-    ///   - message: Handles script completion
-    ///   - output: Handles script completion
     /// - Note: Take caution when using unix scripts directly as strings, as problems with symbol escaping may prevent AppleScript from correctly executing it.
     internal func execute(unixScriptText scriptText: String, withPrivilegeLevel privilegeLevel: Privileges? = .user, completionHandler: RequestHandler) {
         let aScriptText = convertUnixCommandToAppleScript(targetScript: scriptText, withPrivilegeLevel: privilegeLevel)
@@ -62,16 +59,26 @@ internal class SwiptCore {
     ///   - privilegeLevel: Required privilege level (default = `user`)
     ///   - shellType: Choice of shell (default = `/bin/sh`)
     ///   - completionHandler: Handles script completion
-    ///   - error: Handles script completion
-    ///   - message: Handles script completion
-    ///   - output: Handles script completion
-    internal func execute(unixScript scriptFileName: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler) {
-        let aScriptText = convertUnixFileToAppleScript(targetScriptFilePath: scriptFileName, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType)
+    internal func execute(unixScriptPath scriptFilePath: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler) {
+        let aScriptText = convertUnixFileToAppleScript(targetScriptFilePath: scriptFilePath, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType)
         guard let extractedAScriptText = aScriptText else {
             completionHandler(-1, errors[-1]!, "")
             return
         }
         guard let aScript = NSAppleScript(source: extractedAScriptText) else {
+            completionHandler(-2, errors[-2]!, "")
+            return
+        }
+        compileAndExecute(targetScript: aScript, completionHandler: completionHandler)
+    }
+    
+    /// Execute AppleScript as text directly.
+    ///
+    /// - Parameters:
+    ///   - scriptText: AppleScript text
+    ///   - completionHandler: Handles script completion
+    internal func execute(appleScriptText scriptText: String, completionHandler: RequestHandler) {
+        guard let aScript = NSAppleScript(source: scriptText) else {
             completionHandler(-2, errors[-2]!, "")
             return
         }
@@ -132,6 +139,45 @@ extension SwiptCore {
     private func convertUnixCommandToAppleScript(targetScript script: String, withPrivilegeLevel privilegeLevel: Privileges? = .user) -> String {
         let aScript: String = "\(aSInvokeShell) \"\(script)\""
         return manageScriptPrivilege(processingAppleScript: aScript, withPrivilegeLevel: privilegeLevel)
+    }
+    
+}
+
+// MARK: - Multi-threaded, asynchronous, & high-perf workloads
+extension SwiptCore {
+    
+    internal func asyncExecute(unixScriptText scriptText: String, withPrivilegeLevel privilegeLevel: Privileges? = .user, completionHandler: @escaping RequestHandler) {
+        let dispatchGroup = DispatchGroup()
+        var error = 0, message = "", output = ""
+        dispatchGroup.enter()
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.execute(unixScriptText: scriptText, withPrivilegeLevel: privilegeLevel) { err, msg, out in
+                error = err
+                message = msg
+                output = out
+            }
+            dispatchGroup.leave()
+        }
+        dispatchGroup.notify(queue: .main) {
+            completionHandler(error, message, output)
+        }
+    }
+    
+    internal func asyncExecute(unixScriptPath scriptFilePath: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: @escaping RequestHandler) {
+        let dispatchGroup = DispatchGroup()
+        var error = 0, message = "", output = ""
+        dispatchGroup.enter()
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.execute(unixScriptPath: scriptFilePath, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType) { err, msg, out in
+                error = err
+                message = msg
+                output = out
+            }
+            dispatchGroup.leave()
+        }
+        dispatchGroup.notify(queue: .main) {
+            completionHandler(error, message, output)
+        }
     }
     
 }

@@ -14,6 +14,13 @@
 ///   - output: Script output/result
 public typealias RequestHandler = (_ error: Int, _ message: String, _ output: String) -> Void
 
+/// Handles script termination.
+/// - Parameters:
+///   - errors: Returned error codes
+///   - messages: Return error messages
+///   - outputs: Script outputs/results
+public typealias MultiRequestHandler = (_ errors: [Int], _ messages: [String], _ outputs: [String]) -> Void
+
 /// AppleScript: Shell invocation call
 let aSSaveTarget: String = "set target to quoted form of"
 
