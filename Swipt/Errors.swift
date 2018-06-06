@@ -11,4 +11,4 @@ internal let errors: [Int : String] = [
      0 : "Action Successful",
     -1 : "Unable to embed unix command -> AppleScript",
     -2 : "Unable to generate AppleScript from source",
-    ]
+]

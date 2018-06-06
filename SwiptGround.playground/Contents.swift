@@ -3,7 +3,7 @@
 import Swipt
 import Foundation
 
-let unixScript = "echo a b c"
+let unixScript = ""
 
 SwiptManager.execute(unixScriptText: unixScript, withPrivilegeLevel: .user) { error, message, output in
     print(error, message, output)

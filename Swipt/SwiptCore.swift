@@ -32,11 +32,7 @@ internal class SwiptCore {
             completionHandler(errorCode, errorMessage, "")
             return
         }
-        guard let scriptReturnString = scriptReturn.stringValue else {
-            completionHandler(0, errors[0]!, "")
-            return
-        }
-        completionHandler(0, errors[0]!, scriptReturnString)
+        completionHandler(0, errors[0]!, scriptReturn.stringValue ?? "")
     }
     
     /// Executes a string representation of unix commands.
