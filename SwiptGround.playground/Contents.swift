@@ -3,7 +3,7 @@
 import Swipt
 import Foundation
 
-let unixScript = "open /Applications"
+let unixScript = "opens /Applications"
 
 SwiptManager.execute(unixScriptText: unixScript) { error, message in
     print(error, message)

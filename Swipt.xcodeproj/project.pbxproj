@@ -10,6 +10,7 @@
 		A8207A3720C79AD300E93103 /* SwiptCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8207A3620C79AD300E93103 /* SwiptCore.swift */; };
 		A8207A3920C79BD300E93103 /* Privileges.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8207A3820C79BD300E93103 /* Privileges.swift */; };
 		A8207A3B20C79CED00E93103 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8207A3A20C79CED00E93103 /* Constants.swift */; };
+		A829159F20C7C1F700554FB5 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A829159E20C7C1F700554FB5 /* Errors.swift */; };
 		A890F65220C7AB4500D8984A /* ShellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890F65120C7AB4500D8984A /* ShellType.swift */; };
 		A8FE40C1207A77CF00BAEE61 /* Swipt.h in Headers */ = {isa = PBXBuildFile; fileRef = A8FE40BF207A77CF00BAEE61 /* Swipt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A8FE40CC207A783E00BAEE61 /* SwiptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FE40CB207A783E00BAEE61 /* SwiptManager.swift */; };
@@ -19,6 +20,7 @@
 		A8207A3620C79AD300E93103 /* SwiptCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiptCore.swift; sourceTree = "<group>"; };
 		A8207A3820C79BD300E93103 /* Privileges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Privileges.swift; sourceTree = "<group>"; };
 		A8207A3A20C79CED00E93103 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A829159E20C7C1F700554FB5 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		A890F65120C7AB4500D8984A /* ShellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellType.swift; sourceTree = "<group>"; };
 		A8FE40BC207A77CF00BAEE61 /* Swipt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Swipt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8FE40BF207A77CF00BAEE61 /* Swipt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Swipt.h; sourceTree = "<group>"; };
@@ -37,6 +39,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A829159D20C7BD1800554FB5 /* Properties */ = {
+			isa = PBXGroup;
+			children = (
+				A8207A3820C79BD300E93103 /* Privileges.swift */,
+				A890F65120C7AB4500D8984A /* ShellType.swift */,
+				A8207A3A20C79CED00E93103 /* Constants.swift */,
+				A829159E20C7C1F700554FB5 /* Errors.swift */,
+			);
+			name = Properties;
+			sourceTree = "<group>";
+		};
 		A8FE40B2207A77CF00BAEE61 = {
 			isa = PBXGroup;
 			children = (
@@ -57,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				A8FE40CA207A781B00BAEE61 /* Core */,
+				A829159D20C7BD1800554FB5 /* Properties */,
 				A8FE40C8207A77FF00BAEE61 /* Configuration */,
 			);
 			path = Swipt;
@@ -76,9 +90,6 @@
 			children = (
 				A8FE40CB207A783E00BAEE61 /* SwiptManager.swift */,
 				A8207A3620C79AD300E93103 /* SwiptCore.swift */,
-				A8207A3820C79BD300E93103 /* Privileges.swift */,
-				A890F65120C7AB4500D8984A /* ShellType.swift */,
-				A8207A3A20C79CED00E93103 /* Constants.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -166,6 +177,7 @@
 				A8207A3920C79BD300E93103 /* Privileges.swift in Sources */,
 				A8207A3720C79AD300E93103 /* SwiptCore.swift in Sources */,
 				A8207A3B20C79CED00E93103 /* Constants.swift in Sources */,
+				A829159F20C7C1F700554FB5 /* Errors.swift in Sources */,
 				A890F65220C7AB4500D8984A /* ShellType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
