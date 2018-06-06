@@ -21,4 +21,4 @@ let aSSaveTarget: String = "set target to quoted form of"
 let aSInvokeShell: String = "do shell script"
 
 /// AppleScript: Shell adminstrator privilege request
-let aSAdminPrivilege: String = "with adminstrator privileges"
+let aSAdminPrivilege: String = "with administrator privileges"

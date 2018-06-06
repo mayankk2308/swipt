@@ -11,7 +11,8 @@ import Foundation
 /// Primary scripting interface.
 public class SwiptManager {
     
-    static let core = SwiptCore()
+    /// Swift Core Service object for script processing and management.
+    private static let core = SwiptCore()
     
     /// Executes a string representation of unix commands.
     ///
@@ -28,11 +29,12 @@ public class SwiptManager {
     ///
     /// - Parameters:
     ///   - scriptFileName: File path to script
+    ///   - scriptArgs: Arguments for script
     ///   - privilegeLevel: Required privilege level (default = `user`)
     ///   - shellType: Choice of shell (default = `/bin/sh`)
     ///   - completionHandler: Handles script completion
-    public static func execute(unixScriptFile scriptPath: String, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler) {
-        core.execute(unixScript: scriptPath, withPrivilegeLevel: privilegeLevel, withShellType: shellType, completionHandler: completionHandler)
+    public static func execute(unixScriptFile scriptPath: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler) {
+        core.execute(unixScript: scriptPath, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType, completionHandler: completionHandler)
     }
 
 }

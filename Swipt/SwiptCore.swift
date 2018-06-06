@@ -43,7 +43,7 @@ internal class SwiptCore {
     ///
     /// - Parameters:
     ///   - scriptText: Any `unix` command
-    ///   - privilegeLevel: Required privilege level (default = user)
+    ///   - privilegeLevel: Required privilege level (default = `user`)
     ///   - completionHandler: Handles script completion
     ///   - error: Handles script completion
     ///   - message: Handles script completion
@@ -62,14 +62,15 @@ internal class SwiptCore {
     ///
     /// - Parameters:
     ///   - scriptFileName: File path to script
+    ///   - scriptArgs: Arguments for script
     ///   - privilegeLevel: Required privilege level (default = `user`)
     ///   - shellType: Choice of shell (default = `/bin/sh`)
     ///   - completionHandler: Handles script completion
     ///   - error: Handles script completion
     ///   - message: Handles script completion
     ///   - output: Handles script completion
-    internal func execute(unixScript scriptFileName: String, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler) {
-        let aScriptText = convertUnixFileToAppleScript(targetScriptFilePath: scriptFileName, withPrivilegeLevel: privilegeLevel, withShellType: shellType)
+    internal func execute(unixScript scriptFileName: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler) {
+        let aScriptText = convertUnixFileToAppleScript(targetScriptFilePath: scriptFileName, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType)
         guard let extractedAScriptText = aScriptText else {
             completionHandler(-1, errors[-1]!, "")
             return
@@ -107,12 +108,21 @@ extension SwiptCore {
     ///
     /// - Parameters:
     ///   - scriptPath: Path to script
+    ///   - scriptArgs: Arguments for script
     ///   - privilegeLevel: Required privilege level (default = `user`)
     ///   - shellType: Choice of shell (default = `/bin/sh`)
     /// - Returns: Updated string representation of the script for AppleScript
-    private func convertUnixFileToAppleScript(targetScriptFilePath scriptPath: String, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh) -> String? {
+    private func convertUnixFileToAppleScript(targetScriptFilePath scriptPath: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh) -> String? {
         var aScript: String = "\(aSSaveTarget) \"\(scriptPath)\"\n"
-        aScript.append("\(aSInvokeShell) (\"\((shellType ?? .sh).rawValue) \" & target)")
+        aScript.append("\(aSInvokeShell) (\"\((shellType ?? .sh).rawValue) \" & target")
+        var accumulatedArgs = ""
+        if let args = scriptArgs {
+            for arg in args {
+                accumulatedArgs.append(" \(arg)")
+            }
+            aScript.append(" &\"\(accumulatedArgs)\"")
+        }
+        aScript.append(")")
         return manageScriptPrivilege(processingAppleScript: aScript, withPrivilegeLevel: privilegeLevel)
     }
     

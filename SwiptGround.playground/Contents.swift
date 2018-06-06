@@ -3,12 +3,12 @@
 import Swipt
 import Foundation
 
-let unixScript = "echo yo"
+let unixScript = "echo a b c"
 
-SwiptManager.execute(unixScriptText: unixScript) { error, message, output in
+SwiptManager.execute(unixScriptText: unixScript, withPrivilegeLevel: .user) { error, message, output in
     print(error, message, output)
 }
 
-//SwiptManager.execute(unixScriptFile: "/Users/mayank/Desktop/test.sh", withShellType: .bash) { error, message, output in
+//SwiptManager.execute(unixScriptFile: "/Users/mayank/Desktop/test.sh", withArgs: ["hello","b","c"], withShellType: .bash) { error, message, output in
 //    print(error, message, output)
 //}
