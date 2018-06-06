@@ -7,11 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A8207A3720C79AD300E93103 /* SwiptCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8207A3620C79AD300E93103 /* SwiptCore.swift */; };
+		A8207A3920C79BD300E93103 /* Privileges.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8207A3820C79BD300E93103 /* Privileges.swift */; };
+		A8207A3B20C79CED00E93103 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8207A3A20C79CED00E93103 /* Constants.swift */; };
+		A890F65220C7AB4500D8984A /* ShellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A890F65120C7AB4500D8984A /* ShellType.swift */; };
 		A8FE40C1207A77CF00BAEE61 /* Swipt.h in Headers */ = {isa = PBXBuildFile; fileRef = A8FE40BF207A77CF00BAEE61 /* Swipt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A8FE40CC207A783E00BAEE61 /* SwiptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FE40CB207A783E00BAEE61 /* SwiptManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A8207A3620C79AD300E93103 /* SwiptCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiptCore.swift; sourceTree = "<group>"; };
+		A8207A3820C79BD300E93103 /* Privileges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Privileges.swift; sourceTree = "<group>"; };
+		A8207A3A20C79CED00E93103 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A890F65120C7AB4500D8984A /* ShellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellType.swift; sourceTree = "<group>"; };
 		A8FE40BC207A77CF00BAEE61 /* Swipt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Swipt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8FE40BF207A77CF00BAEE61 /* Swipt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Swipt.h; sourceTree = "<group>"; };
 		A8FE40C0207A77CF00BAEE61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -67,6 +75,10 @@
 			isa = PBXGroup;
 			children = (
 				A8FE40CB207A783E00BAEE61 /* SwiptManager.swift */,
+				A8207A3620C79AD300E93103 /* SwiptCore.swift */,
+				A8207A3820C79BD300E93103 /* Privileges.swift */,
+				A890F65120C7AB4500D8984A /* ShellType.swift */,
+				A8207A3A20C79CED00E93103 /* Constants.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -151,6 +163,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8FE40CC207A783E00BAEE61 /* SwiptManager.swift in Sources */,
+				A8207A3920C79BD300E93103 /* Privileges.swift in Sources */,
+				A8207A3720C79AD300E93103 /* SwiptCore.swift in Sources */,
+				A8207A3B20C79CED00E93103 /* Constants.swift in Sources */,
+				A890F65220C7AB4500D8984A /* ShellType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

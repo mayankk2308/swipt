@@ -11,24 +11,10 @@ import Foundation
 /// Primary scripting interface.
 public class SwiptManager {
     
-    public static func execute(withScript script: String, terminationHandler: ((Int) -> Void)?) {
-        guard let appleScript = NSAppleScript(source: script) else {
-            if terminationHandler != nil {
-                terminationHandler!(-1)
-            }
-            return
-        }
-        var scriptError: NSDictionary?
-        appleScript.executeAndReturnError(&scriptError)
-        if let error = scriptError {
-            let errorCode = error["NSAppleScriptErrorNumber"] as! Int
-            if terminationHandler != nil {
-                terminationHandler!(errorCode)
-            }
-        } else {
-            if terminationHandler != nil {
-                terminationHandler!(0)
-            }
-        }
+    static let core = SwiptCore()
+    
+    public static func execute(unixScriptText scriptText: String, withPrivilegeLevel privelegeLevel: Privileges? = .user, completionHandler: (Int, String) -> Void) {
+        core.execute(unixScriptText: scriptText, withPrivilegeLevel: privelegeLevel, completionHandler: completionHandler)
     }
+
 }
