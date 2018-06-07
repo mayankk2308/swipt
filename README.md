@@ -62,7 +62,7 @@ swiptManager.execute(unixScriptText: sampleUnixCommand, withPrivilegeLevel: .adm
 
 You can easily handle script outputs and errors:
 ```swift
-swiptManager.execute(unixScriptText: sampleUnixCommand) { error, message, output in {
+swiptManager.execute(unixScriptText: sampleUnixCommand) { error, message, output in
     // handle errors & output
 }
 ```
