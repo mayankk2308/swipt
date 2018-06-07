@@ -21,7 +21,7 @@ public class SwiptManager {
     ///   - privilegeLevel: Required privilege level (default = `user`)
     ///   - completionHandler: Handles script completion
     /// - Note: Take caution when using unix scripts directly as strings, as problems with symbol escaping may prevent AppleScript from correctly executing it.
-    public static func execute(unixScriptText scriptText: String, withPrivilegeLevel privilegeLevel: Privileges? = .user, completionHandler: RequestHandler) {
+    public static func execute(unixScriptText scriptText: String, withPrivilegeLevel privilegeLevel: Privileges? = .user, completionHandler: RequestHandler? = nil) {
         core.execute(unixScriptText: scriptText, withPrivilegeLevel: privilegeLevel, completionHandler: completionHandler)
     }
     
@@ -33,7 +33,7 @@ public class SwiptManager {
     ///   - privilegeLevel: Required privilege level (default = `user`)
     ///   - shellType: Choice of shell (default = `/bin/sh`)
     ///   - completionHandler: Handles script completion
-    public static func execute(unixScriptFile scriptPath: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler) {
+    public static func execute(unixScriptFile scriptPath: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler? = nil) {
         core.execute(unixScriptPath: scriptPath, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType, completionHandler: completionHandler)
     }
 
