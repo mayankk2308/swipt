@@ -1,4 +1,4 @@
-# Swipt
+![Header](https://raw.githubusercontent.com/mayankk2308/swipt/master/Resources/hero.png)
 Swipt is an easy-to-use API for **macOS Yosemite** or later, and enables developers to execute **shell** scripts directly in Swift. This allows for some interesting special use cases, and *may* circumvent the need to use **XPC Services**.
 
 ## Installation
