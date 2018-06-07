@@ -11,8 +11,24 @@ import Foundation
 /// Defines Swipt Core Service for script processing and management.
 internal class SwiptCore {
     
-    /// Serial queue for multi-threading
-    let queue = DispatchQueue(label: "com.mayank.swipt.execute", qos: .userInitiated)
+    /// Serial queues for multi-threading
+    var queues = [DispatchQueue]()
+    
+    /// Initializer assistant for queues.
+    ///
+    /// - Parameter num: Number of queues
+    private func queueInitializer(withNum num: Int) {
+        for num in 0..<num {
+            queues.append(DispatchQueue(label: "com.mayank.swipt.execute.\(num)", qos: .userInitiated))
+        }
+    }
+    
+    /// Initialize default queuing configuration (default = 4 serial).
+    ///
+    /// - Parameter num: Number of queues.
+    init(withQueueNumber num: Int? = 4) {
+        self.queueInitializer(withNum: num ?? 4)
+    }
     
     /// Compiles and executes target AppleScript object.
     ///
@@ -171,7 +187,7 @@ extension SwiptCore {
     ///   - completionHandler: Handles script completion
     /// - Note: Take caution when using unix scripts directly as strings, as problems with symbol escaping may prevent AppleScript from correctly executing it.
     internal func asyncExecute(unixScriptText scriptText: String, withPrivilegeLevel privilegeLevel: Privileges? = .user, completionHandler: RequestHandler? = nil) {
-        queue.async {
+        queues[0].async {
             self.execute(unixScriptText: scriptText, withPrivilegeLevel: privilegeLevel, completionHandler: completionHandler)
         }
     }
@@ -185,7 +201,7 @@ extension SwiptCore {
     ///   - shellType: Choice of shell (default = `/bin/sh`)
     ///   - completionHandler: Handles script completion
     internal func asyncExecute(unixScriptPath scriptFilePath: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler? = nil) {
-        queue.async {
+        queues[0].async {
             self.execute(unixScriptPath: scriptFilePath, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType, completionHandler: completionHandler)
         }
     }
@@ -220,7 +236,9 @@ extension SwiptCore {
                         shellType = currentShellType
                     }
                 }
-                self.asyncExecute(unixScriptPath: scriptFilePath, withArgs: args, withPrivilegeLevel: privilegeLevel, withShellType: shellType)
+                self.queues[index % self.queues.count].async {
+                    self.execute(unixScriptPath: scriptFilePath, withArgs: args, withPrivilegeLevel: privilegeLevel, withShellType: shellType)
+                }
             }
         }
     }

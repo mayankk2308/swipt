@@ -11,10 +11,15 @@ import Foundation
 /// Primary scripting interface.
 public class SwiptManager {
     
-    public init() {}
-    
     /// Swift Core Service object for script processing and management.
-    private let core = SwiptCore()
+    private let core: SwiptCore
+    
+    /// Initialize default queuing configuration (default = 4 serial).
+    ///
+    /// - Parameter numberOfQueues: Number of queues.
+    public init(withQueues numberOfQueues: Int? = 4) {
+        core = SwiptCore(withQueueNumber: numberOfQueues)
+    }
     
     /// Executes a string representation of unix commands.
     ///
