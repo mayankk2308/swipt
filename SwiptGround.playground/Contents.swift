@@ -10,4 +10,8 @@ let scripts = ["\(desktop)test.sh", "\(desktop)test2.sh"]
 
 let swiptManager = SwiptManager()
 
+swiptManager.asyncExecute(appleScriptText: "tell application \"Finder\" to activate") { e, m, o in
+    print(e, m, o)
+}
+
 //swiptManager.executeSerialBatch(unixScriptFiles: scripts)

@@ -19,7 +19,7 @@ internal class SwiptCore {
     /// - Parameters:
     ///   - aScript: Target `NSAppleScript` object
     ///   - completionHandler: Handles script completion
-    private func compileAndExecute(targetScript aScript: NSAppleScript, completionHandler: RequestHandler? = nil) {
+    private func execute(targetScript aScript: NSAppleScript, completionHandler: RequestHandler? = nil) {
         var errorInfo: NSDictionary?
         let scriptReturn = aScript.executeAndReturnError(&errorInfo)
         if let executeFailureData = errorInfo {
@@ -60,7 +60,7 @@ internal class SwiptCore {
             }
             return
         }
-        compileAndExecute(targetScript: aScript, completionHandler: completionHandler)
+        execute(targetScript: aScript, completionHandler: completionHandler)
     }
     
     /// Executes a provided script file.
@@ -86,7 +86,7 @@ internal class SwiptCore {
             }
             return
         }
-        compileAndExecute(targetScript: aScript, completionHandler: completionHandler)
+        execute(targetScript: aScript, completionHandler: completionHandler)
     }
     
     /// Execute AppleScript as text directly.
@@ -101,7 +101,7 @@ internal class SwiptCore {
             }
             return
         }
-        compileAndExecute(targetScript: aScript, completionHandler: completionHandler)
+        execute(targetScript: aScript, completionHandler: completionHandler)
     }
 }
 
@@ -193,6 +193,17 @@ extension SwiptCore {
         }
     }
     
+    /// Execute AppleScript as text directly, asynchronously and concurrently
+    ///
+    /// - Parameters:
+    ///   - scriptText: AppleScript text
+    ///   - completionHandler: Handles script completion
+    internal func asyncExecute(appleScriptText scriptText: String, completionHandler: RequestHandler? = nil) {
+        queue.async {
+            self.execute(appleScriptText: scriptText, completionHandler: completionHandler)
+        }
+    }
+    
     /// Executes provided script files asynchronously and concurrently.
     ///
     /// - Parameters:
@@ -228,5 +239,4 @@ extension SwiptCore {
             }
         }
     }
-    
 }
