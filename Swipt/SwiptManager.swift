@@ -12,14 +12,12 @@ import Foundation
 public class SwiptManager {
     
     /// Swift Core Service object for script processing and management.
-    private let core: SwiptCore
+    private let core = SwiptCore()
     
     /// Initialize default queuing configuration (default = 4 serial).
     ///
     /// - Parameter numberOfQueues: Number of queues.
-    public init(withQueues numberOfQueues: Int? = 4) {
-        core = SwiptCore(withQueueNumber: numberOfQueues)
-    }
+    public init() {}
     
     /// Executes a string representation of unix commands.
     ///
@@ -51,6 +49,7 @@ public class SwiptManager {
     ///   - privilegeLevel: Required privilege level (default = `user`)
     ///   - shellType: Choice of shell (default = `/bin/sh`)
     ///   - completionHandler: Handles script completion
+    /// - Note: Take caution when using unix scripts that ask for user input on the command line (such as using `read`). This may unexpected halt execution and potentially crash your application.
     public func execute(unixScriptFile scriptPath: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler? = nil) {
         core.execute(unixScriptPath: scriptPath, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType, completionHandler: completionHandler)
     }
@@ -63,8 +62,13 @@ public class SwiptManager {
     ///   - privilegeLevel: Required privilege level (default = `user`)
     ///   - shellType: Choice of shell (default = `/bin/sh`)
     ///   - completionHandler: Handles script completion
+    /// - Note: Take caution when using unix scripts that ask for user input on the command line (such as using `read`). This may unexpected halt execution and potentially crash your application.
     public func asyncExecute(unixScriptFile scriptPath: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler? = nil) {
         core.asyncExecute(unixScriptPath: scriptPath, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType, completionHandler: completionHandler)
+    }
+    
+    public func executeSerialBatch(unixScriptFiles scriptFilePaths: [String], withArgs scriptArgs: [[String]?]? = nil, withPrivilegeLevels privilegeLevels: [Privileges?]? = nil, withShellTypes shellTypes: [ShellType?]? = nil) {
+        core.executeSerialBatch(unixScriptPaths: scriptFilePaths, withArgs: scriptArgs, withPrivilegeLevels: privilegeLevels, withShellTypes: shellTypes)
     }
 
 }

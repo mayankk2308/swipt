@@ -5,15 +5,9 @@ import Foundation
 import PlaygroundSupport
 
 let unixScript = "nvram -p"
+let desktop = "/Users/mayank/Desktop/"
+let scripts = ["\(desktop)test.sh", "\(desktop)test2.sh"]
 
-let swiptManager = SwiptManager(withQueues: 8)
+let swiptManager = SwiptManager()
 
-swiptManager.asyncExecute(unixScriptText: unixScript, withPrivilegeLevel: .user) { err, mess, out in
-    print(err, mess, out)
-}
-
-//swiptManager.asyncExecute(unixScriptFile: "/Users/mayank/Desktop/test.sh", withArgs: ["a", "b", "c"]) { err, mess, out in
-//    print(err, mess, out)
-//}
-
-//PlaygroundPage.current.needsIndefiniteExecution = true
+//swiptManager.executeSerialBatch(unixScriptFiles: scripts)

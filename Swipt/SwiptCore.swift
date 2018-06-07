@@ -11,24 +11,8 @@ import Foundation
 /// Defines Swipt Core Service for script processing and management.
 internal class SwiptCore {
     
-    /// Serial queues for multi-threading
-    var queues = [DispatchQueue]()
-    
-    /// Initializer assistant for queues.
-    ///
-    /// - Parameter num: Number of queues
-    private func queueInitializer(withNum num: Int) {
-        for num in 0..<num {
-            queues.append(DispatchQueue(label: "com.mayank.swipt.execute.\(num)", qos: .userInitiated))
-        }
-    }
-    
-    /// Initialize default queuing configuration (default = 4 serial).
-    ///
-    /// - Parameter num: Number of queues.
-    init(withQueueNumber num: Int? = 4) {
-        self.queueInitializer(withNum: num ?? 4)
-    }
+    /// Serial queue for multi-threading
+    let queue = DispatchQueue(label: "com.mayank.swipt.execute")
     
     /// Compiles and executes target AppleScript object.
     ///
@@ -37,19 +21,20 @@ internal class SwiptCore {
     ///   - completionHandler: Handles script completion
     private func compileAndExecute(targetScript aScript: NSAppleScript, completionHandler: RequestHandler? = nil) {
         var errorInfo: NSDictionary?
-        aScript.compileAndReturnError(&errorInfo)
-        if let compileFailureData = errorInfo {
-            let errorCode = compileFailureData[NSAppleScript.errorNumber] as! Int
-            let errorMessage = compileFailureData[NSAppleScript.errorMessage] as! String
-            if let handler = completionHandler {
-                handler(errorCode, errorMessage, "")
-            }
-            return
-        }
         let scriptReturn = aScript.executeAndReturnError(&errorInfo)
         if let executeFailureData = errorInfo {
-            let errorCode = executeFailureData[NSAppleScript.errorNumber] as! Int
-            let errorMessage = executeFailureData[NSAppleScript.errorMessage] as! String
+            guard let errorCode = executeFailureData[NSAppleScript.errorNumber] as? Int else {
+                if let handler = completionHandler {
+                    handler(-3, errors[-3]!, "")
+                }
+                return
+            }
+            guard let errorMessage = executeFailureData[NSAppleScript.errorMessage] as? String else {
+                if let handler = completionHandler {
+                    handler(-3, errors[-3]!, "")
+                }
+                return
+            }
             if let handler = completionHandler {
                 handler(errorCode, errorMessage, "")
             }
@@ -86,6 +71,7 @@ internal class SwiptCore {
     ///   - privilegeLevel: Required privilege level (default = `user`)
     ///   - shellType: Choice of shell (default = `/bin/sh`)
     ///   - completionHandler: Handles script completion
+    /// - Note: Take caution when using unix scripts that ask for user input on the command line (such as using `read`). This may unexpected halt execution and potentially crash your application.
     internal func execute(unixScriptPath scriptFilePath: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler? = nil) {
         let aScriptText = convertUnixFileToAppleScript(targetScriptFilePath: scriptFilePath, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType)
         guard let extractedAScriptText = aScriptText else {
@@ -187,7 +173,7 @@ extension SwiptCore {
     ///   - completionHandler: Handles script completion
     /// - Note: Take caution when using unix scripts directly as strings, as problems with symbol escaping may prevent AppleScript from correctly executing it.
     internal func asyncExecute(unixScriptText scriptText: String, withPrivilegeLevel privilegeLevel: Privileges? = .user, completionHandler: RequestHandler? = nil) {
-        queues[0].async {
+        queue.async {
             self.execute(unixScriptText: scriptText, withPrivilegeLevel: privilegeLevel, completionHandler: completionHandler)
         }
     }
@@ -200,8 +186,9 @@ extension SwiptCore {
     ///   - privilegeLevel: Required privilege level (default = `user`)
     ///   - shellType: Choice of shell (default = `/bin/sh`)
     ///   - completionHandler: Handles script completion
+    /// - Note: Take caution when using unix scripts that ask for user input on the command line (such as using `read`). This may unexpected halt execution and potentially crash your application.
     internal func asyncExecute(unixScriptPath scriptFilePath: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler? = nil) {
-        queues[0].async {
+        queue.async {
             self.execute(unixScriptPath: scriptFilePath, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType, completionHandler: completionHandler)
         }
     }
@@ -213,7 +200,8 @@ extension SwiptCore {
     ///   - scriptArgs: List of script args
     ///   - privilegeLevels: List of associated privilege levels
     ///   - shellTypes: List of shell types
-    internal func executeBatch(unixScriptPaths scriptFilePaths: [String], withArgs scriptArgs: [[String]?]? = nil, withPrivilegeLevels privilegeLevels: [Privileges?]? = nil, withShellTypes shellTypes: [ShellType?]? = nil) {
+    /// - Note: Take caution when using unix scripts that ask for user input on the command line (such as using `read`). This may unexpected halt execution and potentially crash your application.
+    internal func executeSerialBatch(unixScriptPaths scriptFilePaths: [String], withArgs scriptArgs: [[String]?]? = nil, withPrivilegeLevels privilegeLevels: [Privileges?]? = nil, withShellTypes shellTypes: [ShellType?]? = nil) {
         let batchProcessingQueue = DispatchQueue(label: "com.mayank.swipt.batch", qos: .utility)
         batchProcessingQueue.async {
             for index in 0..<scriptFilePaths.count {
@@ -236,9 +224,7 @@ extension SwiptCore {
                         shellType = currentShellType
                     }
                 }
-                self.queues[index % self.queues.count].async {
-                    self.execute(unixScriptPath: scriptFilePath, withArgs: args, withPrivilegeLevel: privilegeLevel, withShellType: shellType)
-                }
+                self.asyncExecute(unixScriptPath: scriptFilePath, withArgs: args, withPrivilegeLevel: privilegeLevel, withShellType: shellType)
             }
         }
     }
