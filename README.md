@@ -16,7 +16,7 @@ In your **Cartfile**, add:
 github "mayankk2308/swipt"
 ```
 
-## Usage
+## Basics
 Import **Swipt** module:
 ```swift
 import Swipt
