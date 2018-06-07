@@ -2,13 +2,17 @@
 
 import Swipt
 import Foundation
+import PlaygroundSupport
 
-let unixScript = ""
+let unixScript = "nvram -p"
 
-SwiptManager.execute(unixScriptText: unixScript, withPrivilegeLevel: .user) { error, message, output in
-    print(error, message, output)
+let swiptManager = SwiptManager()
+
+swiptManager.asyncExecute(unixScriptText: unixScript, withPrivilegeLevel: .user) { err, mess, out in
+    print(err, mess, out)
 }
 
-//SwiptManager.execute(unixScriptFile: "/Users/mayank/Desktop/test.sh", withArgs: ["hello","b","c"], withShellType: .bash) { error, message, output in
-//    print(error, message, output)
-//}
+swiptManager.asyncExecute(unixScriptFile: "/Users/mayank/Desktop/test.sh", withArgs: ["a", "b", "c"]) { err, mess, out in
+    print(err, mess, out)
+}
+PlaygroundPage.current.needsIndefiniteExecution = true

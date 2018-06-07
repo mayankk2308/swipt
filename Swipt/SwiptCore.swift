@@ -11,8 +11,8 @@ import Foundation
 /// Defines Swipt Core Service for script processing and management.
 internal class SwiptCore {
     
-    /// Concurrent queue for multi-threading
-    let queue = DispatchQueue(label: "com.mayank.swipt.execute", qos: .userInitiated, attributes: .concurrent)
+    /// Serial queue for multi-threading
+    let queue = DispatchQueue(label: "com.mayank.swipt.execute", qos: .userInitiated)
     
     /// Compiles and executes target AppleScript object.
     ///
@@ -198,7 +198,7 @@ extension SwiptCore {
     ///   - privilegeLevels: List of associated privilege levels
     ///   - shellTypes: List of shell types
     internal func executeBatch(unixScriptPaths scriptFilePaths: [String], withArgs scriptArgs: [[String]?]? = nil, withPrivilegeLevels privilegeLevels: [Privileges?]? = nil, withShellTypes shellTypes: [ShellType?]? = nil) {
-        let batchProcessingQueue = DispatchQueue(label: "com.mayank.swipt.batch", qos: .utility, attributes: .concurrent)
+        let batchProcessingQueue = DispatchQueue(label: "com.mayank.swipt.batch", qos: .utility)
         batchProcessingQueue.async {
             for index in 0..<scriptFilePaths.count {
                 let scriptFilePath = scriptFilePaths[index]
