@@ -70,12 +70,12 @@ swiptManager.execute(unixScriptText: sampleUnixCommand) { error, message, output
 You can provide script files, which is more robust and portable:
 ```swift
 let scriptFile = "/path/to/script.sh"
-swiptManager.execute(unixScriptPath: scriptFile)
+swiptManager.execute(unixScriptFile: scriptFile)
 ```
 
 You can specify privileges in a similar manner shown earlier, but for files, you may additionally specify the shell type:
 ```swift
-swiptManager.execute(unixScriptPath: scriptFile, withShellType: .bash)
+swiptManager.execute(unixScriptFile: scriptFile, withShellType: .bash)
 ```
 
 Completion handlers work in a similar manner as shown earlier. You can also directly execute **AppleScript** as text.
