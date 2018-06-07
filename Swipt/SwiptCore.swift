@@ -25,23 +25,23 @@ internal class SwiptCore {
         if let executeFailureData = errorInfo {
             guard let errorCode = executeFailureData[NSAppleScript.errorNumber] as? Int else {
                 if let handler = completionHandler {
-                    handler(-3, errors[-3]!, "")
+                    handler(.UnknownError(code: -3, message: "An unknown error occurred."), nil)
                 }
                 return
             }
             guard let errorMessage = executeFailureData[NSAppleScript.errorMessage] as? String else {
                 if let handler = completionHandler {
-                    handler(-3, errors[-3]!, "")
+                    handler(.UnknownError(code: -3, message: "An unknown error occurred."), nil)
                 }
                 return
             }
             if let handler = completionHandler {
-                handler(errorCode, errorMessage, "")
+                handler(.ExecutionError(code: errorCode, message: errorMessage), nil)
             }
             return
         }
         if let handler = completionHandler {
-            handler(0, errors[0]!, scriptReturn.stringValue ?? "")
+            handler(nil, scriptReturn.stringValue ?? nil)
         }
     }
     
@@ -56,7 +56,7 @@ internal class SwiptCore {
         let aScriptText = convertUnixCommandToAppleScript(targetScript: scriptText, withPrivilegeLevel: privilegeLevel)
         guard let aScript = NSAppleScript(source: aScriptText) else {
             if let handler = completionHandler {
-                handler(-1, errors[-1]!, "")
+                handler(.ASEmbedError(code: -1, message: "Unable to embed unix command into AppleScript."), nil)
             }
             return
         }
@@ -76,13 +76,13 @@ internal class SwiptCore {
         let aScriptText = convertUnixFileToAppleScript(targetScriptFilePath: scriptFilePath, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType)
         guard let extractedAScriptText = aScriptText else {
             if let handler = completionHandler {
-                handler(-1, errors[-1]!, "")
+                handler(.ASEmbedError(code: -1, message: "Unable to embed unix command into AppleScript."), nil)
             }
             return
         }
         guard let aScript = NSAppleScript(source: extractedAScriptText) else {
             if let handler = completionHandler {
-                handler(-2, errors[-2]!, "")
+                handler(.ASGenError(code: -2, message: "Unable to generate AppleScript from source."), nil)
             }
             return
         }
@@ -97,7 +97,7 @@ internal class SwiptCore {
     internal func execute(appleScriptText scriptText: String, completionHandler: RequestHandler? = nil) {
         guard let aScript = NSAppleScript(source: scriptText) else {
             if let handler = completionHandler {
-                handler(-2, errors[-2]!, "")
+                handler(.ASGenError(code: -2, message: "Unable to generate AppleScript from source."), nil)
             }
             return
         }

@@ -6,10 +6,10 @@
 //  Copyright © 2018 Mayank Kumar. All rights reserved.
 //
 
-/// Defines possible script completion errors
-internal let errors: [Int : String] = [
-     0 : "Action Successful",
-    -1 : "Unable to embed unix command -> AppleScript",
-    -2 : "Unable to generate AppleScript from source",
-    -3 : "An unknown error occurred"
-]
+/// Defines possible script completion errors.
+public enum SwiptError {
+    case ASEmbedError(code: Int, message: String)
+    case ASGenError(code: Int, message: String)
+    case UnknownError(code: Int, message: String)
+    case ExecutionError(code: Int, message: String)
+}
