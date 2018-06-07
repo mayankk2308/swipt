@@ -1,16 +1,16 @@
 ![Header](https://raw.githubusercontent.com/mayankk2308/swipt/master/Resources/hero.png)
-Swipt is an easy-to-use API for **macOS Yosemite** or later, and enables developers to execute **shell** scripts directly in Swift. This allows for some interesting special use cases, and *may* circumvent the need to use **XPC Services**.
+Swipt is an easy-to-use API for **macOS Yosemite** or later, and enables developers to execute **shell** scripts directly in Swift. This allows for some interesting special use cases (especially for non-sandboxed applications), and *may* be used as a suitable alternative to more advanced techniques for simple tasks.
 
 ## Installation
 You have multiple options to install Swipt:
 
-### Cocoapods (Coming Soon)
+### Cocoapods
 In your **Podfile**, add:
 ```ruby
 pod 'Swipt'
 ```
 
-### Carthage (Coming Soon)
+### Carthage
 In your **Cartfile**, add:
 ```shell
 github "mayankk2308/swipt"
@@ -98,7 +98,7 @@ let privilegeLevels = [...Privileges...]
 swiptManager.executeSerialBatch(unixScriptFiles: scriptBatch, withPrivilegeLevels: privilegeLevels, ...)
 ```
 
-This function does not support a completion handler at the moment. A more comprehensive threading system will be implemented at a later date.
+This function does not support a completion handler at the moment. A more comprehensive threading system will be implemented at a later date. As of now, a single off-main serial queue is supported for scripts.
 
 ## License
 This project is available under the **MIT** license. Please see the [license](https://github.com/mayankk2308/swipt/blob/master/LICENSE.md) file for more information.

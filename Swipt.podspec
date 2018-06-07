@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name = 'Swipt'
-    spec.version = '0.9.0'
+    spec.version = '1.0.0'
     spec.osx.deployment_target = '10.10'
     spec.license = { :type => 'MIT', :file => 'LICENSE.md' }
     spec.source = { :git => 'https://github.com/mayankk2308/swipt.git', :tag => spec.version.to_s}
