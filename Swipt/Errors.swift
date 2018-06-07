@@ -7,6 +7,11 @@
 //
 
 /// Defines possible script completion errors.
+///
+/// - ASEmbedError: Error embedding unix command into AppleScript
+/// - ASGenError: Error generating AppleScript
+/// - UnknownError: Unknown error
+/// - ExecutionError: Error occurred during script runtime
 public enum SwiptError {
     case ASEmbedError(code: Int, message: String)
     case ASGenError(code: Int, message: String)
