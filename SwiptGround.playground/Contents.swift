@@ -4,14 +4,18 @@ import Swipt
 import Foundation
 import PlaygroundSupport
 
-//let unixScript = "nvram -p"
+let unixScript = "echo \"hello world\""
 //let desktop = "/Users/mayank/Desktop/"
 //let scripts = ["\(desktop)test.sh", "\(desktop)test2.sh"]
 
 let swiptManager = SwiptManager()
 
-swiptManager.asyncExecute(appleScriptText: "tell application \"Finder\" to activate") { error, output in
-    print(error, output)
+swiptManager.execute(unixScriptText: unixScript) { error, output in
+    print(output ?? "No output")
 }
 
-PlaygroundPage.current.needsIndefiniteExecution = true
+//swiptManager.asyncExecute(appleScriptText: "tell application \"Finder\" to activate") { error, output in
+//    print(error, output)
+//}
+//
+//PlaygroundPage.current.needsIndefiniteExecution = true

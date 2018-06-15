@@ -156,7 +156,7 @@ extension SwiptCore {
     /// - Returns: Updated string representation of the script for AppleScript
     /// - Note: Take caution when using unix scripts directly as strings, as problems with symbol escaping may prevent AppleScript from correctly executing it.
     private func convertUnixCommandToAppleScript(targetScript script: String, withPrivilegeLevel privilegeLevel: Privileges? = .user) -> String {
-        let aScript: String = "\(aSInvokeShell) \"\(script)\""
+        let aScript: String = "\(aSInvokeShell) \"\(script.replacingOccurrences(of: "\"", with: "\\\""))\""
         return manageScriptPrivilege(processingAppleScript: aScript, withPrivilegeLevel: privilegeLevel)
     }
     
