@@ -15,7 +15,6 @@ swiptManager.execute(unixScriptText: unixScript) { error, output in
 }
 
 swiptManager.execute(unixScriptFile: script, withArgs: ["Yo Lo", "I Did It!"], withPrivilegeLevel: .user, withShellType: .bash) { error, output in
-    print(error)
     print(output ?? "No output")
 }
 
