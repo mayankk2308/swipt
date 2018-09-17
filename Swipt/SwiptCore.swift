@@ -136,15 +136,15 @@ extension SwiptCore {
     /// - Returns: Updated string representation of the script for AppleScript
     private func convertUnixFileToAppleScript(targetScriptFilePath scriptPath: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh) -> String? {
         var aScript: String = "\(aSSaveTarget) \"\(scriptPath)\"\n"
-        aScript.append("\(aSInvokeShell) (\"\((shellType ?? .sh).rawValue) \" & target")
-        var accumulatedArgs = ""
-        if let args = scriptArgs {
-            for arg in args {
-                accumulatedArgs.append(" \(arg)")
-            }
-            aScript.append(" &\"\(accumulatedArgs)\"")
+        var primaryCommand = "\(aSInvokeShell) (\"\((shellType ?? .sh).rawValue) \" & target"
+        var argCount = scriptArgs?.count ?? 0, argProcessed = 0
+        while argProcessed < argCount {
+            aScript.append("set arg\(argProcessed + 1) to quoted form of \"\(scriptArgs![argProcessed])\"\n")
+            primaryCommand.append(" & \" \" & arg\(argProcessed + 1)")
+            argProcessed += 1
         }
-        aScript.append(")")
+        primaryCommand.append(")")
+        aScript.append(primaryCommand)
         return manageScriptPrivilege(processingAppleScript: aScript, withPrivilegeLevel: privilegeLevel)
     }
     
@@ -207,16 +207,16 @@ extension SwiptCore {
     /// Executes provided script files asynchronously and concurrently.
     ///
     /// - Parameters:
-    ///   - scriptFilePaths: List of script file paths
+    ///   - scriptBatch: List of script file paths
     ///   - scriptArgs: List of script args
     ///   - privilegeLevels: List of associated privilege levels
     ///   - shellTypes: List of shell types
     /// - Note: Take caution when using unix scripts that ask for user input on the command line (such as using `read`). This may unexpected halt execution and potentially crash your application.
-    internal func executeSerialBatch(unixScriptPaths scriptFilePaths: [String], withArgs scriptArgs: [[String]?]? = nil, withPrivilegeLevels privilegeLevels: [Privileges?]? = nil, withShellTypes shellTypes: [ShellType?]? = nil) {
+    internal func execute(serialBatch scriptBatch: [String], withArgs scriptArgs: [[String]?]? = nil, withPrivilegeLevels privilegeLevels: [Privileges?]? = nil, withShellTypes shellTypes: [ShellType?]? = nil) {
         let batchProcessingQueue = DispatchQueue(label: "com.mayank.swipt.batch", qos: .utility)
         batchProcessingQueue.async {
-            for index in 0..<scriptFilePaths.count {
-                let scriptFilePath = scriptFilePaths[index]
+            for index in 0..<scriptBatch.count {
+                let scriptFilePath = scriptBatch[index]
                 var args = [String]()
                 var privilegeLevel = Privileges.user
                 var shellType = ShellType.sh

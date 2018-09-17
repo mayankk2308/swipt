@@ -94,7 +94,7 @@ public class SwiptManager {
     ///   - shellTypes: List of shell types
     /// - Note: Take caution when using unix scripts that ask for user input on the command line (such as using `read`). This may unexpected halt execution and potentially crash your application.
     public func executeSerialBatch(unixScriptFiles scriptFilePaths: [String], withArgs scriptArgs: [[String]?]? = nil, withPrivilegeLevels privilegeLevels: [Privileges?]? = nil, withShellTypes shellTypes: [ShellType?]? = nil) {
-        core.executeSerialBatch(unixScriptPaths: scriptFilePaths, withArgs: scriptArgs, withPrivilegeLevels: privilegeLevels, withShellTypes: shellTypes)
+        core.execute(serialBatch: scriptFilePaths, withArgs: scriptArgs, withPrivilegeLevels: privilegeLevels, withShellTypes: shellTypes)
     }
 
 }

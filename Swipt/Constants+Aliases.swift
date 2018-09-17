@@ -14,7 +14,7 @@
 ///   - output: Script output/result
 public typealias RequestHandler = (_ error: SwiptError?, _ output: String?) -> Void
 
-/// AppleScript: Shell invocation call
+/// AppleScript: Shell string encapsulation
 let aSSaveTarget: String = "set target to quoted form of"
 
 /// AppleScript: Shell invocation call
