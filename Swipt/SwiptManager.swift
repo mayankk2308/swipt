@@ -14,11 +14,7 @@ public class SwiptManager {
     /// Swift Core Service object for script processing and management.
     private let core = SwiptCore()
     
-    /// Initialize default queuing configuration (default = 4 serial).
-    ///
-    /// - Parameter numberOfQueues: Number of queues.
     public init() {}
-    
     /// Executes a string representation of unix commands.
     ///
     /// - Parameters:
@@ -88,13 +84,13 @@ public class SwiptManager {
     /// Executes provided script files asynchronously and concurrently.
     ///
     /// - Parameters:
-    ///   - scriptFilePaths: List of script file paths
+    ///   - scriptBatch: List of script file paths
     ///   - scriptArgs: List of script args
     ///   - privilegeLevels: List of associated privilege levels
     ///   - shellTypes: List of shell types
     /// - Note: Take caution when using unix scripts that ask for user input on the command line (such as using `read`). This may unexpected halt execution and potentially crash your application.
-    public func executeSerialBatch(unixScriptFiles scriptFilePaths: [String], withArgs scriptArgs: [[String]?]? = nil, withPrivilegeLevels privilegeLevels: [Privileges?]? = nil, withShellTypes shellTypes: [ShellType?]? = nil) {
-        core.execute(serialBatch: scriptFilePaths, withArgs: scriptArgs, withPrivilegeLevels: privilegeLevels, withShellTypes: shellTypes)
+    public func execute(serialBatch scriptBatch: [String], withArgs scriptArgs: [[String]?]? = nil, withPrivilegeLevels privilegeLevels: [Privileges?]? = nil, withShellTypes shellTypes: [ShellType?]? = nil) {
+        core.execute(serialBatch: scriptBatch, withArgs: scriptArgs, withPrivilegeLevels: privilegeLevels, withShellTypes: shellTypes)
     }
 
 }
