@@ -1,3 +1,6 @@
+# 1.2.0
+This release conforms to Swift **5.0**.
+
 # 1.1.0
 This release introduces support for spaces and special characters in paths and arguments.
 

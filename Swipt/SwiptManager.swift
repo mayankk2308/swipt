@@ -22,7 +22,9 @@ public class SwiptManager {
     ///   - privilegeLevel: Required privilege level (default = `user`)
     ///   - completionHandler: Handles script completion
     /// - Note: Take caution when using unix scripts directly as strings, as problems with symbol escaping may prevent AppleScript from correctly executing it.
-    public func execute(unixScriptText scriptText: String, withPrivilegeLevel privilegeLevel: Privileges? = .user, completionHandler: RequestHandler? = nil) {
+    public func execute(unixScriptText scriptText: String,
+                        withPrivilegeLevel privilegeLevel: Privileges? = .user,
+                        completionHandler: RequestHandler? = nil) {
         core.execute(unixScriptText: scriptText, withPrivilegeLevel: privilegeLevel, completionHandler: completionHandler)
     }
     
@@ -31,7 +33,8 @@ public class SwiptManager {
     /// - Parameters:
     ///   - scriptText: AppleScript text
     ///   - completionHandler: Handles script completion
-    public func execute(appleScriptText scriptText: String, completionHandler: RequestHandler? = nil) {
+    public func execute(appleScriptText scriptText: String,
+                        completionHandler: RequestHandler? = nil) {
         core.execute(appleScriptText: scriptText, completionHandler: completionHandler)
     }
     
@@ -42,7 +45,9 @@ public class SwiptManager {
     ///   - privilegeLevel: Required privilege level (default = `user`)
     ///   - completionHandler: Handles script completion
     /// - Note: Take caution when using unix scripts directly as strings, as problems with symbol escaping may prevent AppleScript from correctly executing it.
-    public func asyncExecute(unixScriptText scriptText: String, withPrivilegeLevel privilegeLevel: Privileges? = .user, completionHandler: RequestHandler? = nil) {
+    public func asyncExecute(unixScriptText scriptText: String,
+                             withPrivilegeLevel privilegeLevel: Privileges? = .user,
+                             completionHandler: RequestHandler? = nil) {
         core.asyncExecute(unixScriptText: scriptText, withPrivilegeLevel: privilegeLevel, completionHandler: completionHandler)
     }
     
@@ -51,7 +56,8 @@ public class SwiptManager {
     /// - Parameters:
     ///   - scriptText: AppleScript text
     ///   - completionHandler: Handles script completion
-    public func asyncExecute(appleScriptText scriptText: String, completionHandler: RequestHandler? = nil) {
+    public func asyncExecute(appleScriptText scriptText: String,
+                             completionHandler: RequestHandler? = nil) {
         core.asyncExecute(appleScriptText: scriptText, completionHandler: completionHandler)
     }
     
@@ -64,7 +70,11 @@ public class SwiptManager {
     ///   - shellType: Choice of shell (default = `/bin/sh`)
     ///   - completionHandler: Handles script completion
     /// - Note: Take caution when using unix scripts that ask for user input on the command line (such as using `read`). This may unexpected halt execution and potentially crash your application.
-    public func execute(unixScriptFile scriptPath: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler? = nil) {
+    public func execute(unixScriptFile scriptPath: String,
+                        withArgs scriptArgs: [String]? = nil,
+                        withPrivilegeLevel privilegeLevel: Privileges? = .user,
+                        withShellType shellType: ShellType? = .sh,
+                        completionHandler: RequestHandler? = nil) {
         core.execute(unixScriptPath: scriptPath, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType, completionHandler: completionHandler)
     }
     
@@ -77,7 +87,11 @@ public class SwiptManager {
     ///   - shellType: Choice of shell (default = `/bin/sh`)
     ///   - completionHandler: Handles script completion
     /// - Note: Take caution when using unix scripts that ask for user input on the command line (such as using `read`). This may unexpected halt execution and potentially crash your application.
-    public func asyncExecute(unixScriptFile scriptPath: String, withArgs scriptArgs: [String]? = nil, withPrivilegeLevel privilegeLevel: Privileges? = .user, withShellType shellType: ShellType? = .sh, completionHandler: RequestHandler? = nil) {
+    public func asyncExecute(unixScriptFile scriptPath: String,
+                             withArgs scriptArgs: [String]? = nil,
+                             withPrivilegeLevel privilegeLevel: Privileges? = .user,
+                             withShellType shellType: ShellType? = .sh,
+                             completionHandler: RequestHandler? = nil) {
         core.asyncExecute(unixScriptPath: scriptPath, withArgs: scriptArgs, withPrivilegeLevel: privilegeLevel, withShellType: shellType, completionHandler: completionHandler)
     }
     
@@ -89,7 +103,10 @@ public class SwiptManager {
     ///   - privilegeLevels: List of associated privilege levels
     ///   - shellTypes: List of shell types
     /// - Note: Take caution when using unix scripts that ask for user input on the command line (such as using `read`). This may unexpected halt execution and potentially crash your application.
-    public func execute(serialBatch scriptBatch: [String], withArgs scriptArgs: [[String]?]? = nil, withPrivilegeLevels privilegeLevels: [Privileges?]? = nil, withShellTypes shellTypes: [ShellType?]? = nil) {
+    public func execute(serialBatch scriptBatch: [String],
+                        withArgs scriptArgs: [[String]?]? = nil,
+                        withPrivilegeLevels privilegeLevels: [Privileges?]? = nil,
+                        withShellTypes shellTypes: [ShellType?]? = nil) {
         core.execute(serialBatch: scriptBatch, withArgs: scriptArgs, withPrivilegeLevels: privilegeLevels, withShellTypes: shellTypes)
     }
 
